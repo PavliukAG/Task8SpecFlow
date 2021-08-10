@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,8 +11,9 @@ namespace Task8SpecFlow.Spec
         public static string CatalogSortPageUrl { get; } = "http://automationpractice.com/index.php?controller=search&search_query=Summer&submit_search=&orderby=price&orderway=desc";
         public static string CartPageUrl { get; } = "http://automationpractice.com/index.php?controller=order";
 
-        public static string CurrentUrl { get; set; }
+        public static string CurrentUrl { get; set; } = MainUrl;
         public static string FirstItemName { get; set; }
         public static string FirstItemPrice { get; set; }
+        public static string InfoProducts { get; set; } = "";
     }
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

@@ -27,6 +27,7 @@ namespace Task8SpecFlow.Spec.Hooks
         public void BeforeScenarioChrome()
         {
             SelectBrowser(BrowserType.Chrome);
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
 
@@ -34,12 +35,14 @@ namespace Task8SpecFlow.Spec.Hooks
         public void BeforeScenarioFirefox()
         {
             SelectBrowser(BrowserType.Firefox);
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
         [BeforeScenario("Edge", Order = 3)]
         public void BeforeScenarioEdge()
         {
             SelectBrowser(BrowserType.Edge);
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
         [AfterScenario("Edge")]
@@ -47,6 +50,7 @@ namespace Task8SpecFlow.Spec.Hooks
         [AfterScenario("Firefox")]
         public void AfterScenatioEdge()
         {
+            TestSettings.CurrentUrl = _driver.Url;
             DoAfterEach();
             _driver.Quit();
             _driver.Dispose();

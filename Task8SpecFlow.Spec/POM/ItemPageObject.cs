@@ -18,6 +18,9 @@ namespace Task8SpecFlow.Spec.POM
             PageFactory.InitElements(_webdriver, this);
         }
 
+        [FindsBy(How = How.XPath, Using = ".//span[@itemprop='price']")]
+        [CacheLookup]
+        public IWebElement PriceItemField { get; set; }
 
         [FindsBy(How = How.XPath, Using = ".//input[@name='qty']")]
         [CacheLookup]
@@ -58,6 +61,10 @@ namespace Task8SpecFlow.Spec.POM
             //return _webdriver.FindElement(By.XPath(".//li[@class='selected']/a")).GetAttribute("name") == color;
         }
 
+        public decimal GetItemPrice()
+        {
+            return decimal.Parse(PriceItemField.Text.TrimStart('$'));
+        }
 
     }
 }

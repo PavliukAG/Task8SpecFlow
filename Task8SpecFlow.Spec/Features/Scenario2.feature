@@ -35,9 +35,7 @@ Scenario: Successfully adding an item "PRINTED SUMMER DRESS" to the cart with co
 @Chrome
 Scenario: Make sure the items in the cart have been added correctly
 	Given the cart page is opened
-	When first name, color, size, price and quantity is displayed correctly
-	And second name, color, size, price and quantity is displayed correctly
-	Then total price is displayed correctly
+	Then name, color, size, quantity, price and total price is displayed correctly for double item 
 
 @Chrome
 Scenario: Make sure it is possible to remove an item from the cart
