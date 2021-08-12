@@ -37,7 +37,7 @@ namespace Task8SpecFlow.Spec.Steps
         public void ThenModalWindowWithATitleIsDisplayed(string title)
         {
             ItemPageObject itemModule = new ItemPageObject(_driver);
-            Assert.That(itemModule.CheckModuleTitle(title), "Title in module windows is incorrect!");
+            Assert.IsTrue(itemModule.CheckModuleTitle(title), "Title in module windows is incorrect!");
         }
 
         [When(@"choose conditions for Quantity = '(.*)', Size = '(.*)', Color = '(.*)'")]
@@ -59,6 +59,7 @@ namespace Task8SpecFlow.Spec.Steps
         }
 
         [Then(@"click ""(.*)"" button")]
+        [Obsolete]
         public void ThenClickButton(string buttonName)
         {
             new ItemPageObject(_driver).ClickButton(buttonName);

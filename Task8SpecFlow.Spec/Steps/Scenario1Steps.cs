@@ -37,6 +37,7 @@ namespace Task8SpecFlow.Spec.Steps
         }
 
         [When(@"click the search icon")]
+        [Obsolete]
         public void WhenClickTheSearchIcon()
         {
             FirstPageObject firstPageObject = new FirstPageObject(_driver);
@@ -78,7 +79,7 @@ namespace Task8SpecFlow.Spec.Steps
         public void ThenItemsOnThePageAreSortedAccordingToTheSelectedOption()
         {
             CatalogPageObject catalogPage = new CatalogPageObject(_driver);
-            Assert.That(catalogPage.CheckSort(), "Incorrect sorting price item!");
+            Assert.IsTrue(catalogPage.CheckSort(), "Incorrect sorting price item!");
             TestSettings.CurrentUrl = _driver.Url;
         }
 
