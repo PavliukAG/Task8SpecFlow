@@ -15,7 +15,9 @@ namespace Task8SpecFlow.Spec.Hooks
     {
         private readonly IObjectContainer _objectContainer;
 
-        private IWebDriver _driver;
+        private IWebDriver _driverChrome;
+        private IWebDriver _driverFox;
+        private IWebDriver _driverEdge;
 
 
         public ShopSiteHooks(IObjectContainer objectContainer)
@@ -26,8 +28,8 @@ namespace Task8SpecFlow.Spec.Hooks
         [BeforeScenario("Chrome", Order = 1)]
         public void BeforeScenarioChrome()
         {
+           // _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             SelectBrowser(BrowserType.Chrome);
-            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
 
@@ -35,28 +37,54 @@ namespace Task8SpecFlow.Spec.Hooks
         public void BeforeScenarioFirefox()
         {
             SelectBrowser(BrowserType.Firefox);
-            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
         [BeforeScenario("Edge", Order = 3)]
         public void BeforeScenarioEdge()
         {
+            
             SelectBrowser(BrowserType.Edge);
-            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
+
+        
+        [AfterScenario("Chrome")]
+        public void AfterScenatioC()
+        {
+            TestSettings.CurrentUrl = _driverChrome.Url;
+            DoAfterEach(_driverChrome);
+            _driverChrome.Quit();
+            _driverChrome.Dispose();
+        }
+
+
+
+        [AfterScenario("Firefox")]
+        public void AfterScenatioF()
+        {
+            TestSettings.CurrentUrl = _driverFox.Url;
+            DoAfterEach(_driverFox);
+            _driverFox.Quit();
+            _driverFox.Dispose();
+        }
+
 
         [AfterScenario("Edge")]
-        [AfterScenario("Chrome")]
-        [AfterScenario("Firefox")]
-        public void AfterScenatioEdge()
+        public void AfterScenatioE()
         {
-            TestSettings.CurrentUrl = _driver.Url;
-            DoAfterEach();
-            _driver.Quit();
-            _driver.Dispose();
+            TestSettings.CurrentUrl = _driverEdge.Url;
+            DoAfterEach(_driverEdge);
+            _driverEdge.Quit();
+            _driverEdge.Dispose();
         }
 
-        public void DoAfterEach()
+
+
+
+
+
+
+
+        public void DoAfterEach(IWebDriver _driver)
         {
             DateTime time = DateTime.Now;
             string dateToday = "_date_" + time.ToString("yyyy-MM-dd") + "_time_" + time.ToString("HH-mm-ss");
@@ -72,18 +100,21 @@ namespace Task8SpecFlow.Spec.Hooks
             switch (browserType)
             {
                 case BrowserType.Chrome:                  
-                    _driver = new ChromeDriver(Environment.CurrentDirectory);
-                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driver);
+                    _driverChrome = new ChromeDriver(Environment.CurrentDirectory);
+                    _driverChrome.Manage().Window.Maximize();
+                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driverChrome);
                     break;
                 case BrowserType.Firefox:
-                    _driver = new FirefoxDriver(Environment.CurrentDirectory);
-                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driver);
+                    _driverFox = new FirefoxDriver(Environment.CurrentDirectory);
+                    _driverFox.Manage().Window.Maximize();
+                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driverFox);
                     break;
                 case BrowserType.Edge:
                     var option = new EdgeOptions();
                     option.UseChromium = true;
-                    _driver = new EdgeDriver(Environment.CurrentDirectory, option);
-                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driver);
+                    _driverEdge = new EdgeDriver(Environment.CurrentDirectory, option);
+                    _driverEdge.Manage().Window.Maximize();
+                    _objectContainer.RegisterInstanceAs<IWebDriver>(_driverEdge);
                     break;
                 default:
                     break;

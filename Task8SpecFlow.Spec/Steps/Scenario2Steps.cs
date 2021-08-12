@@ -20,30 +20,30 @@ namespace Task8SpecFlow.Spec.Steps
             catalogPageObject = new CatalogPageObject(driverHelper.Driver);*/
         }
 
-        [Given(@"the search query '(.*)' is displayed in the resualt page")]
+        [Given(@"the search query (.*) is displayed in the resualt page")]
         [Obsolete]
         public void GivenTheSearchQueryIsDisplayedInTheResualtPage(string namePage)
         {
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             TestSettings.InfoProducts = TestSettings.InfoProducts + namePage;
-            //string Url = $"http://automationpractice.com/index.php?controller=search&search_query={namePage}&submit_search=&orderby=position&orderway=asc";
-            //_driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             CatalogPageObject catalogPageObject = new CatalogPageObject(_driver);
-            //Assert.IsTrue(catalogPageObject.CheckSearchText(namePage), $"Searching is not correct! {Url}");
+            Assert.IsTrue(catalogPageObject.CheckSearchText(namePage), "Searching is not correct!");
         }
 
         [Given(@"the item page is opened")]
         public void GivenTheItemPageIsOpened()
         {
             //string Url = $"http://automationpractice.com/index.php?controller=search&search_query=Blouse&submit_search=&orderby=position&orderway=asc";
-           // _driver.Navigate().GoToUrl(Url);
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
         }
 
 
         [Given(@"the cart page is opened")]
         public void GivenTheCartPageIsOpened()
         {
-           // _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
-            Assert.That(false, $"Item in cart {_driver.FindElement(By.XPath("//*[@id='summary_products_quantity']")).Text}");
+            _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
+            _driver.Navigate().Refresh();
+            Assert.That(false, $"Item in cart {_driver.FindElement(By.XPath(".//*[text()='Your shopping cart is empty.']")).Text}");
             //_driver.Navigate().GoToUrl(TestSettings.CartPageUrl);
         }
         
@@ -51,18 +51,15 @@ namespace Task8SpecFlow.Spec.Steps
         [Obsolete]
         public void WhenMoveAndClickButton(string buttonName)
         {
-            new CatalogPageObject(_driver).ButtonItemContainer(buttonName);
-           /* IWebElement spanButton = _driver.FindElement(By.XPath($".//span[text()={buttonName}]"));
-            spanButton.Click();*/
+          
+            new CatalogPageObject(_driver).MoveThenClickButton(buttonName);
         }
         
         
-        [When(@"modal window with a title ""(.*)"" is displayed")]
+        [Then(@"modal window with a title ""(.*)"" is displayed")]
         [Obsolete]
-        public void WhenModalWindowWithATitleIsDisplayed(string title)
+        public void ThenModalWindowWithATitleIsDisplayed(string title)
         {
-            IWebElement element = _driver.FindElement(By.XPath(".//div[@id='layer_cart']/div[@class='clearfix']"));
-            WaitUntil.WaitElement(_driver, element);
             ItemModulePageObject itemModule = new ItemModulePageObject(_driver);
             Assert.That(itemModule.CheckModuleTitle(title), "Title in module windows is incorrect!");
         }
@@ -71,7 +68,6 @@ namespace Task8SpecFlow.Spec.Steps
         public void WhenChooseConditionsForQuantitySizeColor(string qty, string size, string color)
         {
             ItemPageObject itemPageObject = new ItemPageObject(_driver);
-            // IWebDriver driver = ScenarioContext.Current.Get<IWebDriver>("Driver");
             TestSettings.InfoProducts = TestSettings.InfoProducts + "Color : " + color.Trim() + ", Size : " + size.Trim() + qty + itemPageObject.GetItemPrice() + decimal.Parse(qty.Trim())*itemPageObject.GetItemPrice();
             
             itemPageObject.ChooseQnt(qty);
@@ -92,20 +88,23 @@ namespace Task8SpecFlow.Spec.Steps
         [Obsolete]
         public void ThenClickButton(string buttonName)
         {
+            //_driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             IWebElement Button = _driver.FindElement(By.XPath($".//*[@class='button-container']//*[contains(*, '{buttonName}')]"));
+            WaitUntil.WaitElement(_driver, Button);
             WaitUntil.WaitElement(_driver, Button);
             Button.Click();
             WaitUntil.WaitSomeInterval(30);
-            //TestSettings.CurrentUrl = _driver.Url;
+            TestSettings.CurrentUrl = _driver.Url;
         }
 
         [When(@"click ""(.*)"" button")]
         [Obsolete]
         public void WhenClickButton(string buttonName)
         {
-            IWebElement Button = _driver.FindElement(By.XPath($".//*[text()='{buttonName}']"));
-            WaitUntil.WaitElement(_driver, Button);
-            Button.Click();
+            //Assert.That(false, $"Before click button {_driver.Url}");
+            new ItemPageObject(_driver).ClickButtonItemPage(buttonName);
+            
+
         }
 
      
@@ -123,12 +122,13 @@ namespace Task8SpecFlow.Spec.Steps
         }
 
         [Then(@"name, color, size, quantity, price and total price is displayed correctly for double item")]
+        [Obsolete]
         public void ThenNameColorSizeQuantityPriceAndTotalPriceIsDisplayedCorrectlyForDoubleItem()
         {
-           // _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
+            //_driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             CartPageObject cartPage = new CartPageObject(_driver);
             Assert.IsTrue(cartPage.MatchDataInCart(), "Data in cart is not matching!");
-            //TestSettings.CurrentUrl = _driver.Url;
+            TestSettings.CurrentUrl = _driver.Url;
         }
 
     }

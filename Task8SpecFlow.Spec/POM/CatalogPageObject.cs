@@ -64,10 +64,10 @@ namespace Task8SpecFlow.Spec.POM
         }
 
         [Obsolete]
-        public void ButtonItemContainer(string buttonName)
+        public void MoveThenClickButton(string buttonName)
         {
             IWebElement spanButton = _webdriver.FindElement(By.XPath($".//span[text()='{buttonName}']"));
-            WaitUntil.WaitElement(_webdriver, spanButton);
+            //WaitUntil.WaitElement(_webdriver, spanButton);
             Actions action = new Actions(_webdriver);
             action.MoveToElement(FirstProductItem).Click(spanButton).Build().Perform();
         }

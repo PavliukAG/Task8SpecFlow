@@ -66,5 +66,13 @@ namespace Task8SpecFlow.Spec.POM
             return decimal.Parse(PriceItemField.Text.TrimStart('$'));
         }
 
+        [Obsolete]
+        public void ClickButtonItemPage(string buttonName)
+        {
+            IWebElement Button = _webdriver.FindElement(By.XPath($".//*[text()='{buttonName}']"));
+            WaitUntil.WaitElement(_webdriver, Button);
+            Button.Click();
+        }
+
     }
 }

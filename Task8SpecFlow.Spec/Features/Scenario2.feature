@@ -9,12 +9,12 @@ Scenario: Successful "BLOUSE" search
 
 @Chrome
 Scenario: Successfully adding an item "BLOUSE" to the cart with conditions
-	Given the search query 'Blouse' is displayed in the resualt page
+	Given the search query "BLOUSE" is displayed in the resualt page
 	When move and click "More" button
 	When choose conditions for Quantity = '3', Size = 'L', Color = 'White'
 	And click "Add to cart" button
-	When modal window with a title "Product successfully added to your shopping cart" is displayed
-	Then click "Continue shopping" button
+	Then modal window with a title "Product successfully added to your shopping cart" is displayed
+	And click "Continue shopping" button
 
 @Chrome
 Scenario: Successful "PRINTED SUMMER DRESS" search
@@ -25,12 +25,12 @@ Scenario: Successful "PRINTED SUMMER DRESS" search
 
 @Chrome
 Scenario: Successfully adding an item "PRINTED SUMMER DRESS" to the cart with conditions
-	Given the search query 'PRINTED SUMMER DRESS' is displayed in the resualt page
+	Given the search query "PRINTED SUMMER DRESS" is displayed in the resualt page
 	When move and click "More" button
 	When choose conditions for Quantity = '5', Size = 'M', Color = 'Orange'
 	And click "Add to cart" button
-	When modal window with a title "Product successfully added to your shopping cart" is displayed
-	Then click "Proceed to checkout" button
+	Then modal window with a title "Product successfully added to your shopping cart" is displayed
+	And click "Proceed to checkout" button
 
 @Chrome
 Scenario: Make sure the items in the cart have been added correctly

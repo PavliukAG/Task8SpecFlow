@@ -49,7 +49,7 @@ namespace Task8SpecFlow.Spec.Steps
         {
             CatalogPageObject catalogPageObject = new CatalogPageObject(_driver);
             Assert.IsTrue(catalogPageObject.CheckSearchText(search_resualt), "Searching is not correct!");
-            //TestSettings.CurrentUrl = _driver.Url;
+            TestSettings.CurrentUrl = _driver.Url;
         }
 
 

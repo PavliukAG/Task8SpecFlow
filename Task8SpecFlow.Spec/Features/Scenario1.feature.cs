@@ -72,15 +72,19 @@ namespace Task8SpecFlow.Spec.Features
         
         [TechTalk.SpecRun.ScenarioAttribute("The search term \"SUMMER\" is displayed above the list of products near the words \'" +
             "SEARCH\'", new string[] {
-                "Chrome"}, SourceLine=3)]
+                "Chrome",
+                "Firefox",
+                "Edge"}, SourceLine=5)]
         public virtual void TheSearchTermSUMMERIsDisplayedAboveTheListOfProductsNearTheWordsSEARCH()
         {
             string[] tagsOfScenario = new string[] {
-                    "Chrome"};
+                    "Chrome",
+                    "Firefox",
+                    "Edge"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The search term \"SUMMER\" is displayed above the list of products near the words \'" +
                     "SEARCH\'", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -100,16 +104,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
+#line 7
  testRunner.Given("the shopping page is opened", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 6
+#line 8
  testRunner.When("in the search field, enter the keyword: Summer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 7
+#line 9
  testRunner.And("click the search icon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 8
+#line 10
  testRunner.Then("the search query \"SUMMER\" is displayed in the resualt page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -117,14 +121,18 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("Items are sorted in descending order", new string[] {
-                "Chrome"}, SourceLine=11)]
+                "Chrome",
+                "Firefox",
+                "Edge"}, SourceLine=16)]
         public virtual void ItemsAreSortedInDescendingOrder()
         {
             string[] tagsOfScenario = new string[] {
-                    "Chrome"};
+                    "Chrome",
+                    "Firefox",
+                    "Edge"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Items are sorted in descending order", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 12
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -144,13 +152,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 13
+#line 18
  testRunner.Given("product catalog page is opened", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 14
+#line 19
  testRunner.When("open dropdown sorting select the Price: Highest first option", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 20
  testRunner.Then("items on the page are sorted according to the selected option", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -158,14 +166,18 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("Adding items to cart", new string[] {
-                "Chrome"}, SourceLine=17)]
+                "Chrome",
+                "Firefox",
+                "Edge"}, SourceLine=25)]
         public virtual void AddingItemsToCart()
         {
             string[] tagsOfScenario = new string[] {
-                    "Chrome"};
+                    "Chrome",
+                    "Firefox",
+                    "Edge"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding items to cart", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 18
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -185,16 +197,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 19
+#line 27
  testRunner.Given("save information about the first item", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 20
+#line 28
  testRunner.When("move and click \"Add to cart\" button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 21
- testRunner.And("go to cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+ testRunner.Then("click \"Proceed to checkout\" button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 22
+#line 30
  testRunner.Then("the item data matches the item data in the cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

@@ -24,8 +24,11 @@ namespace Task8SpecFlow.Spec.POM
             _webdriver.FindElement(By.XPath($".//div[@class='button-container']/*[@title={buttonName}]")).Click();
         }
 
+        [Obsolete]
         public Boolean CheckModuleTitle(string title)
         {
+            IWebElement element = _webdriver.FindElement(By.XPath(".//div[@id='layer_cart']/div[@class='clearfix']"));
+            WaitUntil.WaitElement(_webdriver, element);
             title = title.Trim();
             return _webdriver.FindElement(By.XPath($".//div[contains(@class, 'layer_cart_product ')]/h2")).Text.Trim() == title;
         }
