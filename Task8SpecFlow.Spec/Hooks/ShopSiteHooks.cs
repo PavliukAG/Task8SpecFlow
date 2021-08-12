@@ -28,7 +28,6 @@ namespace Task8SpecFlow.Spec.Hooks
         [BeforeScenario("Chrome", Order = 1)]
         public void BeforeScenarioChrome()
         {
-           // _driver.Navigate().GoToUrl(TestSettings.CurrentUrl);
             SelectBrowser(BrowserType.Chrome);
         }
 

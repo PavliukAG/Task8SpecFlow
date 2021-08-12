@@ -58,10 +58,10 @@ namespace Task8SpecFlow.Spec.POM
         public IWebElement SecondItemUnitPriceInCart { get; set; }
 
 
-        private string GetItemInfo()
+        public string GetItemInfo()
         {
-            return FirstItemNameInCart.Text.Trim() + FirstItemOptionsInCart.Text + FirstItemQtyInCart.Text + FirstItemUnitPriceInCart.Text.TrimStart('$') + FirstItemPriceTotalInCart.Text.TrimStart('$')+
-                SecondItemNameInCart.Text.Trim() + SecondItemOptionsInCart.Text + SecondItemQtyInCart.Text + SecondItemUnitPriceInCart.Text.TrimStart('$') + SecondItemPriceTotalInCart.Text.TrimStart('$');
+            return FirstItemNameInCart.Text +" " + FirstItemOptionsInCart.Text + FirstItemQtyInCart.GetAttribute("value") + FirstItemUnitPriceInCart.Text.TrimStart('$') + FirstItemPriceTotalInCart.Text.TrimStart('$')+
+              SecondItemNameInCart.Text + " " +  SecondItemOptionsInCart.Text + SecondItemQtyInCart.GetAttribute("value") + SecondItemUnitPriceInCart.Text.TrimStart('$') + SecondItemPriceTotalInCart.Text.TrimStart('$');
         }
 
         public bool MatchDataFirstProductItem()
@@ -70,16 +70,27 @@ namespace Task8SpecFlow.Spec.POM
         }
 
         [System.Obsolete]
-        public bool MatchDataInCart()
+        public string MatchDataInCart()
         {
             WaitUntil.WaitSomeInterval();
-            return GetItemInfo() == TestSettings.InfoProducts;
+            return GetItemInfo();
         }
 
         public void DeleteItemFromCart(string name)
         {
-            IWebElement delete = _webdriver.FindElement(By.XPath($".//tr[1]/td/p[@class='{name.Trim()}']/a/ancestor::tr/td[@data-title='Delete']/div/a/i"));
+            IWebElement delete = _webdriver.FindElement(By.XPath($".//tr/td/p[@class='product-name']/a[text()='{name}']/ancestor::tr/td[@data-title='Delete']/div/a/i"));
             delete.Click();
+            _webdriver.Navigate().Refresh();
+        }
+
+        public bool IsExist(string itemName)
+        {
+            return _webdriver.FindElement(By.XPath($".//td/p[@class='product-name']/a[text()='{itemName}']")).Displayed;
+        }
+
+        public int Count()
+        {
+            return _webdriver.FindElements(By.XPath($".//td/p[@class='product-name']/a")).Count;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Task8SpecFlow.Spec.Steps
         public void WhenInTheSearchFieldEnterTheKeyword(string search_query)
         {
             new FirstPageObject(_driver).InputQueryInSearch(search_query);
+           
         }
 
         [When(@"click the search icon")]

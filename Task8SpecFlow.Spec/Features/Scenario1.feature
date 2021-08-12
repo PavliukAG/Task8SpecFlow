@@ -1,4 +1,4 @@
-﻿Feature: ShopSite
+﻿Feature: Scenario2
 
 @Chrome
 @Firefox
@@ -18,6 +18,7 @@ Scenario: Items are sorted in descending order
 	Given product catalog page is opened
 	When open dropdown sorting select the Price: Highest first option
 	Then items on the page are sorted according to the selected option
+
 
 
 @Chrome

@@ -66,8 +66,8 @@ namespace Task8SpecFlow.Spec.POM
         [Obsolete]
         public void MoveThenClickButton(string buttonName)
         {
-            IWebElement spanButton = _webdriver.FindElement(By.XPath($".//span[text()='{buttonName}']"));
-            //WaitUntil.WaitElement(_webdriver, spanButton);
+            IWebElement spanButton = _webdriver.FindElement(By.XPath($".//li[1]//span[text()='{buttonName}']"));
+            WaitUntil.WaitElement(_webdriver, FirstProductItem);
             Actions action = new Actions(_webdriver);
             action.MoveToElement(FirstProductItem).Click(spanButton).Build().Perform();
         }

@@ -34,13 +34,20 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement ColorField { get; set; }
 
+        [FindsBy(How = How.XPath, Using = ".//h1[@itemprop='name']")]
+        [CacheLookup]
+        public IWebElement ItemName { get; set; }
+
+
+
         public void ChooseQnt(string qty)
         {
             qty = qty.Trim();
             QtyField.Clear();
             QtyField.SendKeys(qty);
-            //return QtyField.Text==qty;
         }
+
+
 
         [Obsolete]
         public void ChooseSize(string size) 
@@ -50,7 +57,6 @@ namespace Task8SpecFlow.Spec.POM
             SizeField.Click();
             WaitUntil.WaitElement(_webdriver, sizeOption);
             sizeOption.Click();            
-           // return _webdriver.FindElement(By.XPath($".//div[@id='uniform-group_1']/span")).Text.Trim() == size;
         }
 
         public void ChooseColor(string color)
@@ -58,7 +64,6 @@ namespace Task8SpecFlow.Spec.POM
             color = color.Trim();
             IWebElement colorOption = _webdriver.FindElement(By.XPath($".//a[@name='{color}']"));
             colorOption.Click();
-            //return _webdriver.FindElement(By.XPath(".//li[@class='selected']/a")).GetAttribute("name") == color;
         }
 
         public decimal GetItemPrice()
@@ -74,5 +79,26 @@ namespace Task8SpecFlow.Spec.POM
             Button.Click();
         }
 
+        public string GetItemName()
+        {
+            return ItemName.Text;
+        }
+
+        [Obsolete]
+        public Boolean CheckModuleTitle(string title)
+        {
+            IWebElement element = _webdriver.FindElement(By.XPath(".//div[@id='layer_cart']/div[@class='clearfix']"));
+            WaitUntil.WaitElement(_webdriver, element);
+            title = title.Trim();
+            return _webdriver.FindElement(By.XPath($".//div[contains(@class, 'layer_cart_product ')]/h2")).Text.Trim() == title;
+        }
+
+        [Obsolete]
+        public void ClickButton(string nameBtn)
+        {
+            IWebElement Button = _webdriver.FindElement(By.XPath($".//*[@class='button-container']/*[contains(@title, '{nameBtn}')]"));
+            WaitUntil.WaitElement(_webdriver, Button);
+            Button.Click();
+        }
     }
 }

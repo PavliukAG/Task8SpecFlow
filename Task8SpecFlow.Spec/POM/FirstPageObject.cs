@@ -20,6 +20,7 @@ namespace Task8SpecFlow.Spec.POM
             Header.InputSearchWord(search_query);
         }
 
+        [System.Obsolete]
         public void FindQueryInSearch()
         {
             Header.ClickOnSearchingButton();
