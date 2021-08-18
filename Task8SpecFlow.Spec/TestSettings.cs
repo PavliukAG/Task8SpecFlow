@@ -7,7 +7,6 @@ namespace Task8SpecFlow.Spec
     public class TestSettings
     {
         public static string MainUrl { get;  } = "http://automationpractice.com/";
-        public static string CurrentUrl { get; set; } = MainUrl;
         public static string FirstItemName { get; set; }
         public static string FirstItemPrice { get; set; }
         public static string InfoProducts { get; set; } = "";

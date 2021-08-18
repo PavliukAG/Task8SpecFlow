@@ -38,6 +38,19 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement ItemName { get; set; }
 
+        [FindsBy(How = How.XPath, Using = "//div[@id='layer_cart']/div[@class='clearfix']")]
+        [CacheLookup]
+        public IWebElement ModuleWindow { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'layer_cart_product ')]/h2")]
+        [CacheLookup]
+        public IWebElement TitleModuleWindow { get; set; }
+
+        private string locatorSize(string size) => $".//*[@id='group_1']/option[text()='{size}']";
+        private string locatorColor(string color) => $".//a[@name='{color}']";
+        private string locatorItemButton(string buttonName) => $".//*[text()='{buttonName}']";
+        private string locatorButtonInModuleWindow(string nameBtn) => $".//*[@class='button-container']/*[contains(@title, '{nameBtn}')]";
+         
 
 
         public void ChooseQnt(string qty)
@@ -47,13 +60,11 @@ namespace Task8SpecFlow.Spec.POM
             QtyField.SendKeys(qty);
         }
 
-
-
-        [Obsolete]
+      
         public void ChooseSize(string size) 
         {
             size = size.Trim().ToUpper();
-            IWebElement sizeOption = _webdriver.FindElement(By.XPath($".//*[@id='group_1']/option[text()='{size}']"));
+            IWebElement sizeOption = _webdriver.FindElement(By.XPath(locatorSize(size)));
             SizeField.Click();
             WaitUntil.WaitElement(_webdriver, sizeOption);
             sizeOption.Click();            
@@ -62,7 +73,7 @@ namespace Task8SpecFlow.Spec.POM
         public void ChooseColor(string color)
         {
             color = color.Trim();
-            IWebElement colorOption = _webdriver.FindElement(By.XPath($".//a[@name='{color}']"));
+            IWebElement colorOption = _webdriver.FindElement(By.XPath(locatorColor(color)));
             colorOption.Click();
         }
 
@@ -71,10 +82,10 @@ namespace Task8SpecFlow.Spec.POM
             return decimal.Parse(PriceItemField.Text.TrimStart('$'));
         }
 
-        [Obsolete]
+     
         public void ClickButtonItemPage(string buttonName)
         {
-            IWebElement Button = _webdriver.FindElement(By.XPath($".//*[text()='{buttonName}']"));
+            IWebElement Button = _webdriver.FindElement(By.XPath(locatorItemButton(buttonName)));
             WaitUntil.WaitElement(_webdriver, Button);
             Button.Click();
         }
@@ -84,21 +95,26 @@ namespace Task8SpecFlow.Spec.POM
             return ItemName.Text;
         }
 
-        [Obsolete]
+ 
         public Boolean CheckModuleTitle(string title)
         {
-            IWebElement element = _webdriver.FindElement(By.XPath(".//div[@id='layer_cart']/div[@class='clearfix']"));
-            WaitUntil.WaitElement(_webdriver, element);
+            WaitUntil.WaitElement(_webdriver, ModuleWindow);
             title = title.Trim();
-            return _webdriver.FindElement(By.XPath($".//div[contains(@class, 'layer_cart_product ')]/h2")).Text.Trim() == title;
+            return TitleModuleWindow.Text.Trim() == title;
         }
 
-        [Obsolete]
-        public void ClickButton(string nameBtn)
+        
+        public void ClickButtonInModuleWindow(string nameBtn)
         {
-            IWebElement Button = _webdriver.FindElement(By.XPath($".//*[@class='button-container']/*[contains(@title, '{nameBtn}')]"));
+            IWebElement Button = _webdriver.FindElement(By.XPath(locatorButtonInModuleWindow(nameBtn)));
             WaitUntil.WaitElement(_webdriver, Button);
             Button.Click();
+        }
+
+
+        public Boolean CheckPageTitle(string pageName)
+        {
+            return _webdriver.Title.Contains(pageName);
         }
     }
 }

@@ -53,33 +53,34 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement SearchLighter { get; set; }
 
-        [Obsolete]
+        private string locatorListPrice = "//div[@class = 'right-block']//span[ @class = 'old-price product-price']  | .//div[@class = 'right-block']//span[ @class = 'price product-price' and not(./following-sibling::span[@class='old-price product-price'])]";
+        private string locatorButtonName(string buttonName) => $".//li[1]//span[text()='{buttonName}']";
+        private string locatorSortType(string typeSort) => $".//select[@id='selectProductSort']/option[text()='{typeSort}']";
+
+
         public void Sorting(string typeSort)
         {
             WaitUntil.WaitElement(_webdriver, SelectSortButton);
             SelectSortButton.Click();
-            IWebElement TypeSortPrice = _webdriver.FindElement(By.XPath($".//select[@id='selectProductSort']/option[text()='{typeSort}']"));
+            IWebElement TypeSortPrice = _webdriver.FindElement(By.XPath(locatorSortType(typeSort)));
             WaitUntil.WaitElement(_webdriver, TypeSortPrice);
             TypeSortPrice.Click();
         }
 
-        [Obsolete]
         public void MoveThenClickButton(string buttonName)
         {
-            IWebElement spanButton = _webdriver.FindElement(By.XPath($".//li[1]//span[text()='{buttonName}']"));
+            IWebElement spanButton = _webdriver.FindElement(By.XPath(locatorButtonName(buttonName)));
             WaitUntil.WaitElement(_webdriver, FirstProductItem);
             Actions action = new Actions(_webdriver);
             action.MoveToElement(FirstProductItem).Click(spanButton).Build().Perform();
         }
 
-        [Obsolete]
         public void OpenCartPage()
         {
             WaitUntil.WaitElement(_webdriver, CheckoutCart);
             CheckoutCart.Click();
         }
 
-        [Obsolete]
         public Boolean CheckSearchText(string search_resualt)
         {
             WaitUntil.WaitElement(_webdriver, SearchLighter);
@@ -88,7 +89,6 @@ namespace Task8SpecFlow.Spec.POM
             return search_resualt.Contains(search);
         }
 
-        [Obsolete]
         public Boolean SaveInfoFirstItem()
         {
             WaitUntil.WaitElement(_webdriver, FirstProductItem);
@@ -100,14 +100,14 @@ namespace Task8SpecFlow.Spec.POM
         public List<Decimal> GetListPrice()
         {
             List<Decimal> listItem = new List<decimal>();
-            IList<IWebElement> PriceItem = _webdriver.FindElements(By.XPath(".//div[@class = 'right-block']//span[ @class = 'old-price product-price']  | .//div[@class = 'right-block']//span[ @class = 'price product-price' and not(./following-sibling::span[@class='old-price product-price'])]"));
+            IList<IWebElement> PriceItem = _webdriver.FindElements(By.XPath(locatorListPrice));
             foreach (IWebElement element in PriceItem)
             {
                 listItem.Add(Decimal.Parse(element.Text.TrimStart('$')));
             }
             return listItem;
         }
-       
+
         public bool CheckSort()
         {
             var actualSortData = GetListPrice();

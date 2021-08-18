@@ -57,6 +57,9 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement SecondItemUnitPriceInCart { get; set; }
 
+        private string locatorName(string itemName) => $"//td/p[@class='product-name']/a[text()='{itemName}']";
+        private string locatorNameForDelete(string itemName) => $".//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td[@data-title='Delete']/div/a/i";
+
 
         public string GetItemInfo()
         {
@@ -69,7 +72,6 @@ namespace Task8SpecFlow.Spec.POM
             return FirstItemNameInCart.Text.Trim() == TestSettings.FirstItemName.Trim() && FirstItemPriceTotalInCart.Text.Trim() == TestSettings.FirstItemPrice.Trim();
         }
 
-        [System.Obsolete]
         public string MatchDataInCart()
         {
             WaitUntil.WaitSomeInterval();
@@ -78,19 +80,19 @@ namespace Task8SpecFlow.Spec.POM
 
         public void DeleteItemFromCart(string name)
         {
-            IWebElement delete = _webdriver.FindElement(By.XPath($".//tr/td/p[@class='product-name']/a[text()='{name}']/ancestor::tr/td[@data-title='Delete']/div/a/i"));
+            IWebElement delete = _webdriver.FindElement(By.XPath(locatorNameForDelete(name)));
             delete.Click();
             _webdriver.Navigate().Refresh();
         }
 
         public bool IsExist(string itemName)
         {
-            return _webdriver.FindElement(By.XPath($".//td/p[@class='product-name']/a[text()='{itemName}']")).Displayed;
+            return _webdriver.FindElement(By.XPath(locatorName(itemName))).Displayed;
         }
 
-        public int Count()
+        public int Count(string itemName)
         {
-            return _webdriver.FindElements(By.XPath($".//td/p[@class='product-name']/a")).Count;
+            return _webdriver.FindElements(By.XPath(locatorName(itemName))).Count;
         }
     }
 }

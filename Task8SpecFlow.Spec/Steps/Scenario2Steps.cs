@@ -11,81 +11,86 @@ namespace Task8SpecFlow.Spec.Steps
     {
 
         private IWebDriver _driver;
+        private CartPageObject _cartPageObject;
+        private ItemPageObject _itemPageObject;
+        private CatalogPageObject _catalogPageObject;
         public Scenario2Steps(IWebDriver driver)
         {
+
+           
             _driver = driver;
+            _cartPageObject = new CartPageObject(_driver);
+            _catalogPageObject = new CatalogPageObject(_driver);
+            _itemPageObject = new ItemPageObject(_driver);
         }
 
         [Given(@"the search query (.*) is displayed in the resualt page")]
-        [Obsolete]
         public void GivenTheSearchQueryIsDisplayedInTheResualtPage(string namePage)
         {
-            CatalogPageObject catalogPageObject = new CatalogPageObject(_driver);
-            Assert.IsTrue(catalogPageObject.CheckSearchText(namePage), "Searching is not correct!");
+            Assert.IsTrue(_catalogPageObject.CheckSearchText(namePage), "Searching is not correct!");
         }
 
         [When(@"move and click ""(.*)"" button")]
-        [Obsolete]
         public void WhenMoveAndClickButton(string buttonName)
-        {          
+        {
             new CatalogPageObject(_driver).MoveThenClickButton(buttonName);
         }
         
         
         [Then(@"modal window with a title ""(.*)"" is displayed")]
-        [Obsolete]
         public void ThenModalWindowWithATitleIsDisplayed(string title)
         {
-            ItemPageObject itemModule = new ItemPageObject(_driver);
-            Assert.IsTrue(itemModule.CheckModuleTitle(title), "Title in module windows is incorrect!");
+            Assert.IsTrue(_itemPageObject.CheckModuleTitle(title), "Title in module windows is incorrect!");
         }
 
         [When(@"choose conditions for Quantity = '(.*)', Size = '(.*)', Color = '(.*)'")]
-        [Obsolete]
         public void WhenChooseConditionsForQuantitySizeColor(string qty, string size, string color)
         {
-            ItemPageObject itemPageObject = new ItemPageObject(_driver);
-            TestSettings.InfoProducts = TestSettings.InfoProducts + itemPageObject.GetItemName()+ " Color : " + color.Trim() + ", Size : " + size.Trim() + qty + itemPageObject.GetItemPrice() + decimal.Parse(qty.Trim())*itemPageObject.GetItemPrice();
-            
-            itemPageObject.ChooseQnt(qty);
-            itemPageObject.ChooseSize(size);
-            itemPageObject.ChooseColor(color);
+            _itemPageObject = new ItemPageObject(_driver);
+            TestSettings.InfoProducts = TestSettings.InfoProducts + _itemPageObject.GetItemName()+ " Color : " + color.Trim() + ", Size : " + size.Trim() + qty + _itemPageObject.GetItemPrice() + decimal.Parse(qty.Trim())* _itemPageObject.GetItemPrice();
+
+            _itemPageObject.ChooseQnt(qty);
+            _itemPageObject.ChooseSize(size);
+            _itemPageObject.ChooseColor(color);
         }
         
         [When(@"delete item '(.*)' from cart")]
         public void WhenDeleteItemFromCart(string productName)
         {
-            new CartPageObject(_driver).DeleteItemFromCart(productName);
+            _cartPageObject.DeleteItemFromCart(productName);
         }
 
         [Then(@"click ""(.*)"" button")]
-        [Obsolete]
         public void ThenClickButton(string buttonName)
         {
-            new ItemPageObject(_driver).ClickButton(buttonName);
+            _itemPageObject.ClickButtonInModuleWindow(buttonName);
         }
 
         [When(@"click ""(.*)"" button")]
-        [Obsolete]
         public void WhenClickButton(string buttonName)
         {
-            new ItemPageObject(_driver).ClickButtonItemPage(buttonName);
+            _itemPageObject.ClickButtonItemPage(buttonName);
         }
 
      
         [Then(@"only item '(.*)' is displayed in cart")]
         public void ThenOnlyItemIsDisplayedInCart(string productName)
         {
-            Assert.IsTrue(new CartPageObject(_driver).IsExist(productName));
-            Assert.AreEqual(new CartPageObject(_driver).Count(), 1);
+            Assert.IsTrue(_cartPageObject.IsExist(productName));
+            Assert.AreEqual(_cartPageObject.Count(productName), 1);
         }
 
         [Then(@"name, color, size, quantity, price and total price is displayed correctly for double item")]
-        [Obsolete]
         public void ThenNameColorSizeQuantityPriceAndTotalPriceIsDisplayedCorrectlyForDoubleItem()
         {
-            CartPageObject cartPage = new CartPageObject(_driver);
-            Assert.AreEqual(cartPage.GetItemInfo(), TestSettings.InfoProducts);
+            Assert.AreEqual(_cartPageObject.GetItemInfo(), TestSettings.InfoProducts);
+        }
+
+        [Then(@"the '(.*)' item page is opened")]
+        public void ThenTheItemPageIsOpened(string pageName)
+        {
+            
+            Assert.IsTrue(_itemPageObject.CheckPageTitle(pageName));
         }
 
     }

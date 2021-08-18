@@ -49,7 +49,6 @@ namespace Task8SpecFlow.Spec.Hooks
         [AfterScenario("Chrome")]
         public void AfterScenatioC()
         {
-            TestSettings.CurrentUrl = _driverChrome.Url;
             DoAfterEach(_driverChrome);
             _driverChrome.Quit();
             _driverChrome.Dispose();
@@ -60,7 +59,6 @@ namespace Task8SpecFlow.Spec.Hooks
         [AfterScenario("Firefox")]
         public void AfterScenatioF()
         {
-            TestSettings.CurrentUrl = _driverFox.Url;
             DoAfterEach(_driverFox);
             _driverFox.Quit();
             _driverFox.Dispose();
@@ -70,16 +68,10 @@ namespace Task8SpecFlow.Spec.Hooks
         [AfterScenario("Edge")]
         public void AfterScenatioE()
         {
-            TestSettings.CurrentUrl = _driverEdge.Url;
             DoAfterEach(_driverEdge);
             _driverEdge.Quit();
             _driverEdge.Dispose();
         }
-
-
-
-
-
 
 
 

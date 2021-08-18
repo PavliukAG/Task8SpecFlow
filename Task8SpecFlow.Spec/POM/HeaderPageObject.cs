@@ -15,7 +15,7 @@ namespace Task8SpecFlow.Spec.POM
             PageFactory.InitElements(webDriver, this);
         }
 
-        [FindsBy(How = How.XPath, Using = "//form[@id='searchbox']/*[@placeholder='Search']")]
+        [FindsBy(How = How.XPath, Using = "//*[@placeholder='Search']")]
         [CacheLookup]
         public IWebElement SearchPlaceholder { get; set; }
 
@@ -41,7 +41,6 @@ namespace Task8SpecFlow.Spec.POM
             SearchPlaceholder.SendKeys(search_query);
         }
 
-        [System.Obsolete]
         public void ClickOnSearchingButton()
         {
             WaitUntil.WaitElement(_webDriver, SearchSubmit);

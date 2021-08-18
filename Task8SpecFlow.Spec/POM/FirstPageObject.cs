@@ -11,7 +11,7 @@ namespace Task8SpecFlow.Spec.POM
         public FirstPageObject(IWebDriver webdriver)
         { 
             _webdriver = webdriver;
-            Header = new HeaderPageObject(webdriver);
+            Header = new HeaderPageObject(_webdriver);
             PageFactory.InitElements(_webdriver, this);
         }
 
@@ -20,7 +20,6 @@ namespace Task8SpecFlow.Spec.POM
             Header.InputSearchWord(search_query);
         }
 
-        [System.Obsolete]
         public void FindQueryInSearch()
         {
             Header.ClickOnSearchingButton();
