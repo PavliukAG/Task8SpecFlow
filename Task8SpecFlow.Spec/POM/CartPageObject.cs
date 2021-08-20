@@ -19,43 +19,11 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement FirstItemPriceTotalInCart { get; set; }
 
-        [FindsBy(How = How.XPath, Using = ".//tr[1]/td/small/a")]
-        [CacheLookup]
-        public IWebElement FirstItemOptionsInCart { get; set; }
-
-        [FindsBy(How = How.XPath, Using = ".//tr[1]/td/input[2]")]
-        [CacheLookup]
-        public IWebElement FirstItemQtyInCart { get; set; }
 
         [FindsBy(How = How.XPath, Using = ".//tr[1]/td/p[@class='product-name']/a")]
         [CacheLookup]
         public IWebElement FirstItemNameInCart { get; set; }
-
-
-        [FindsBy(How = How.XPath, Using = ".//tr[1]/td/span/span")]
-        [CacheLookup]
-        public IWebElement FirstItemUnitPriceInCart { get; set; }
-
-        [FindsBy(How = How.XPath, Using = ".//tr[2]/td/small/a")]
-        [CacheLookup]
-        public IWebElement SecondItemOptionsInCart { get; set; }
-
-        [FindsBy(How = How.XPath, Using = ".//tr[2]/td[@class = 'cart_total']/span")]
-        [CacheLookup]
-        public IWebElement SecondItemPriceTotalInCart { get; set; }
-
-        [FindsBy(How = How.XPath, Using = ".//tr[2]/td/input[2]")]
-        [CacheLookup]
-        public IWebElement SecondItemQtyInCart { get; set; }
-
-        [FindsBy(How = How.XPath, Using = ".//tr[2]/td/p[@class='product-name']/a")]
-        [CacheLookup]
-        public IWebElement SecondItemNameInCart { get; set; }
-
-
-        [FindsBy(How = How.XPath, Using = ".//tr[2]/td/span/span")]
-        [CacheLookup]
-        public IWebElement SecondItemUnitPriceInCart { get; set; }
+     
 
         private string locatorUnitPrice(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td/span/span";
         private string locatorTotalPrice(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td[@class = 'cart_total']/span";
