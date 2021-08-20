@@ -10,5 +10,7 @@ namespace Task8SpecFlow.Spec
         public static string FirstItemName { get; set; }
         public static string FirstItemPrice { get; set; }
         public static string InfoProducts { get; set; } = "";
+        public static string FirstName { get; set; } = "Blouse";
+        public static string SecondName { get; set; } = "Printed Summer Dress";
     }
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

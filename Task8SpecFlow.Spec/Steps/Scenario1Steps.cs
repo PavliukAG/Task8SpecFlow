@@ -14,15 +14,10 @@ namespace Task8SpecFlow.Spec.Steps
     {
 
         private IWebDriver _driver;
-        private CatalogPageObject _catalogPageObject;
-        private CartPageObject _cartPageObject;
+
         public Scenario1Steps(IWebDriver driver)
         {
-
             _driver = driver;
-            _catalogPageObject = new CatalogPageObject(_driver);
-            _cartPageObject = new CartPageObject(_driver);
-
         }
 
         [Given(@"the shopping page is opened")]
@@ -35,15 +30,13 @@ namespace Task8SpecFlow.Spec.Steps
         public void WhenInTheSearchFieldEnterTheKeyword(string search_query)
         {
             new FirstPageObject(_driver).InputQueryInSearch(search_query);
-
         }
 
         [When(@"click the search icon")]
         public void WhenClickTheSearchIcon()
         {            
             new FirstPageObject(_driver).FindQueryInSearch();
-        }
-        
+        }        
 
         [Then(@"the search query (.*) is displayed in the resualt page")]
         public void ThenTheSearchQueryIsDisplayedInTheResualtPage(string search_resualt)
@@ -53,37 +46,32 @@ namespace Task8SpecFlow.Spec.Steps
 
         [When(@"open dropdown sorting select the (.*) option")]
         public void WhenOpenDropdownSortingSelectTheOption(string typeSort)
-        {            
-            _catalogPageObject.Sorting(typeSort);
+        {
+            new CatalogPageObject(_driver).Sorting(typeSort);
         }
-
 
         [Then(@"items on the page are sorted according to the selected option")]
         public void ThenItemsOnThePageAreSortedAccordingToTheSelectedOption()
-        {
-           
-            Assert.IsTrue(_catalogPageObject.CheckSort(), "Incorrect sorting price item!");
+        {           
+            Assert.IsTrue(new CatalogPageObject(_driver).CheckSort(), "Incorrect sorting price item!");
         }
         [Given(@"save information about the first item")]
         public void GivenSaveInformationAboutTheFirstItem()
-        {
-            
-            Assert.IsTrue(_catalogPageObject.SaveInfoFirstItem());
+        {            
+            Assert.IsTrue(new CatalogPageObject(_driver).SaveInfoFirstItem());
         }
 
         [When(@"go to cart")]
         public void WhenGoToCart()
         {
-            
-            _catalogPageObject.OpenCartPage();
+            new CatalogPageObject(_driver).OpenCartPage();
         }
 
 
         [Then(@"the item data matches the item data in the cart")]
         public void ThenTheItemDataMatchesTheItemDataInTheCart()
-        {
-            
-            Assert.IsTrue(_cartPageObject.MatchDataFirstProductItem());
+        {            
+            Assert.IsTrue(new CartPageObject(_driver).MatchDataFirstProductItem());
         }
 
 

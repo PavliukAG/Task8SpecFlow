@@ -57,14 +57,26 @@ namespace Task8SpecFlow.Spec.POM
         [CacheLookup]
         public IWebElement SecondItemUnitPriceInCart { get; set; }
 
+        private string locatorUnitPrice(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td/span/span";
+        private string locatorTotalPrice(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td[@class = 'cart_total']/span";
+        private string locatorQty(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td/input[contains(@class, 'cart_quantity_input')]";
+        private string locatorOptions(string itemName) => $"//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td/small/a";
         private string locatorName(string itemName) => $"//td/p[@class='product-name']/a[text()='{itemName}']";
         private string locatorNameForDelete(string itemName) => $".//tr/td/p[@class='product-name']/a[text()='{itemName}']/ancestor::tr/td[@data-title='Delete']/div/a/i";
 
 
         public string GetItemInfo()
         {
-            return FirstItemNameInCart.Text +" " + FirstItemOptionsInCart.Text + FirstItemQtyInCart.GetAttribute("value") + FirstItemUnitPriceInCart.Text.TrimStart('$') + FirstItemPriceTotalInCart.Text.TrimStart('$')+
-              SecondItemNameInCart.Text + " " +  SecondItemOptionsInCart.Text + SecondItemQtyInCart.GetAttribute("value") + SecondItemUnitPriceInCart.Text.TrimStart('$') + SecondItemPriceTotalInCart.Text.TrimStart('$');
+            return _webdriver.FindElement(By.XPath(locatorName(TestSettings.FirstName))).Text +" " 
+                + _webdriver.FindElement(By.XPath(locatorOptions(TestSettings.FirstName))).Text 
+                + _webdriver.FindElement(By.XPath(locatorQty(TestSettings.FirstName))).GetAttribute("value") 
+                + _webdriver.FindElement(By.XPath(locatorUnitPrice(TestSettings.FirstName))).Text.TrimStart('$') 
+                + _webdriver.FindElement(By.XPath(locatorTotalPrice(TestSettings.FirstName))).Text.TrimStart('$')+
+              _webdriver.FindElement(By.XPath(locatorName(TestSettings.SecondName))).Text + " " 
+              + _webdriver.FindElement(By.XPath(locatorOptions(TestSettings.SecondName))).Text 
+              + _webdriver.FindElement(By.XPath(locatorQty(TestSettings.SecondName))).GetAttribute("value") 
+              + _webdriver.FindElement(By.XPath(locatorUnitPrice(TestSettings.SecondName))).Text.TrimStart('$') 
+              + _webdriver.FindElement(By.XPath(locatorTotalPrice(TestSettings.SecondName))).Text.TrimStart('$');
         }
 
         public bool MatchDataFirstProductItem()
@@ -72,11 +84,6 @@ namespace Task8SpecFlow.Spec.POM
             return FirstItemNameInCart.Text.Trim() == TestSettings.FirstItemName.Trim() && FirstItemPriceTotalInCart.Text.Trim() == TestSettings.FirstItemPrice.Trim();
         }
 
-        public string MatchDataInCart()
-        {
-            WaitUntil.WaitSomeInterval();
-            return GetItemInfo();
-        }
 
         public void DeleteItemFromCart(string name)
         {
